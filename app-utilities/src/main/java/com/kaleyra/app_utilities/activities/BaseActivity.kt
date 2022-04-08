@@ -24,7 +24,6 @@ import android.view.inputmethod.InputMethodManager
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.kaleyra.app_utilities.MultiDexApplication.Companion.restApi
 import com.kaleyra.app_utilities.R
 import com.kaleyra.app_utilities.utils.DPadNavigationHelper
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -50,6 +49,8 @@ abstract class BaseActivity : AppCompatActivity() {
         dialog!!.show()
     }
 
+    protected fun dismissErrorDialog() = dialog?.dismiss()
+
     @JvmOverloads
     protected fun showConfirmDialog(@StringRes title: Int, @StringRes message: Int, onConfirm: DialogInterface.OnClickListener? = null) {
         if (dialog != null) dialog!!.dismiss()
@@ -71,7 +72,6 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onPause() {
         if (dialog != null) dialog!!.dismiss()
         dialog = null
-        restApi.cancel()
         super.onPause()
     }
 
