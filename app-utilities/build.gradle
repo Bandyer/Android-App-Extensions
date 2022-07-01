@@ -119,7 +119,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
 
     /*** FCM setup ***/
-    implementation "com.google.firebase:firebase-messaging:$firebaseMessagingLibVersion"
+    compileOnly "com.google.firebase:firebase-messaging:$firebaseMessagingLibVersion"
 
     /*** Pushy notification service, useful for China ***/
     compileOnly 'me.pushy:sdk:1.0.82'
