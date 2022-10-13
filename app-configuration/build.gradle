@@ -38,6 +38,7 @@ def kotlin_version = '1.6.10'
 
 android {
     compileSdkVersion sdkVersion
+    buildToolsVersion buildToolsVersion
 
     defaultConfig {
         minSdkVersion 21
