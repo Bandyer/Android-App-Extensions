@@ -69,13 +69,16 @@ class MockUserDetailsSettingsActivity : ScrollAwareToolbarActivity() {
         userDetailsSelectionLayout = findViewById(R.id.user_derails_selection_layout)
         none = findViewById(R.id.radio_button_user_details_none)
         val random = findViewById<RadioButton>(R.id.radio_button_user_details_random)
+        val remote = findViewById<RadioButton>(R.id.radio_button_user_details_remote)
         val custom = findViewById<RadioButton>(R.id.radio_button_user_details_custom)
         val radioGroup = findViewById<RadioGroup>(R.id.mock_user_details_radio_group)
         val noneSummary = findViewById<TextView>(R.id.radio_button_user_details_none_summary)
         val randomSummary = findViewById<TextView>(R.id.radio_button_user_details_random_summary)
+        val remoteSummary = findViewById<TextView>(R.id.radio_button_user_details_remote_summary)
         val customSummary = findViewById<TextView>(R.id.radio_button_user_details_custom_summary)
         noneSummary.setOnClickListener { none!!.performClick() }
         randomSummary.setOnClickListener { random.performClick() }
+        remoteSummary.setOnClickListener { remote.performClick() }
         customSummary.setOnClickListener { custom.performClick() }
         imageView = findViewById(R.id.image_view)
         editTextView = findViewById(R.id.pref_text_view)
@@ -93,6 +96,12 @@ class MockUserDetailsSettingsActivity : ScrollAwareToolbarActivity() {
                     userDetailsSelectionLayout!!.visibility = View.GONE
                     clearUserSelectionDetails()
                 }
+                remote.id -> {
+                    hideKeyboard()
+                    currentMockUserDetailsModeMode = UserDetailsProviderMode.REMOTE
+                    userDetailsSelectionLayout!!.visibility = View.GONE
+                    clearUserSelectionDetails()
+                }
                 custom.id -> {
                     currentMockUserDetailsModeMode = UserDetailsProviderMode.CUSTOM
                     userDetailsSelectionLayout!!.visibility = View.VISIBLE
@@ -103,6 +112,7 @@ class MockUserDetailsSettingsActivity : ScrollAwareToolbarActivity() {
         when (currentMockUserDetailsModeMode) {
             UserDetailsProviderMode.NONE   -> none!!.isChecked = true
             UserDetailsProviderMode.SAMPLE -> random.isChecked = true
+            UserDetailsProviderMode.REMOTE -> remote.isChecked = true
             UserDetailsProviderMode.CUSTOM -> custom.isChecked = true
         }
         displayName = intent.getStringExtra(ImageTextEditActivity.PRESET_TEXT_PARAM) ?: ""

@@ -30,6 +30,11 @@ enum class UserDetailsProviderMode {
     SAMPLE,
 
     /**
+     * Display name and image coming from server side user details provider will be used to display user.
+     */
+    REMOTE,
+
+    /**
      * A custom display name and image will be user for ALL users.
      */
     CUSTOM

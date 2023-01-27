@@ -28,14 +28,17 @@
 
     <string name="mock_user_details_config_none" translatable="false">NONE</string>
     <string name="mock_user_details_config_sample" translatable="false">SAMPLE</string>
+    <string name="mock_user_details_config_remote" translatable="false">REMOTE</string>
     <string name="mock_user_details_config_custom" translatable="false">CUSTOM</string>
     <string name="mock_user_details_display_name" translatable="false">Display name</string>
     <string name="mock_user_details_config_none_summary" translatable="false">No user details provider will be used, default avatars and user aliases will be shown.</string>
     <string name="mock_user_details_config_sample_summary" translatable="false">A web based sample user details provider used to display custom users details.</string>
-    <string name="mock_user_details_config_custom_summary" translatable="false">A custom combination of image and display name will be used for all displayed users except the logged one. </string>
+    <string name="mock_user_details_config_custom_summary" translatable="false">A custom combination of image and display name will be used for all displayed users except the logged one.</string>
+    <string name="mock_user_details_config_remote_summary" translatable="false">Display name and display image coming from the server side user details provider, if set, will be shown.</string>
     <string-array name="mockUserDetailsType">
         <item>@string/mock_user_details_config_none</item>
         <item>@string/mock_user_details_config_sample</item>
+        <item>@string/mock_user_details_config_remote</item>
         <item>@string/mock_user_details_config_custom</item>
     </string-array>
 
