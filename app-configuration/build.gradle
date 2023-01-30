@@ -56,7 +56,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "boolean", "USE_LEAK_CANARY", "false"
-            buildConfigField "boolean", "USE_MOCK_USER_DETAILS_PROVIDER", "false"
             buildConfigField "boolean", "USE_SIMPLIFIED_VERSION", "true"
             buildConfigField "boolean", "MOCK_USER_AUTHENTICATION_REQUEST", "false"
         }
@@ -64,7 +63,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "boolean", "USE_LEAK_CANARY", "$useLeakCanary"
-            buildConfigField "boolean", "USE_MOCK_USER_DETAILS_PROVIDER", "$useMockUserDetailsProvider"
+
             buildConfigField "boolean", "USE_SIMPLIFIED_VERSION", "false"
         }
     }
