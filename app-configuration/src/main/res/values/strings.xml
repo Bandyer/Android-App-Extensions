@@ -30,7 +30,7 @@
     <string name="mock_user_details_config_custom" translatable="false">CUSTOM</string>
     <string name="mock_user_details_display_name" translatable="false">Display name</string>
     <string name="mock_user_details_config_custom_summary" translatable="false">A custom combination of image and display name will be used for all displayed users except the logged one.</string>
-    <string name="mock_user_details_config_remote_summary" translatable="false">Display name and display image coming from the server side user details provider, if set, will be shown.</string>
+    <string name="mock_user_details_config_remote_summary" translatable="false">If a server side user details provider has been set, its users\' representation will be used to display users\' name and image.</string>
     <string-array name="mockUserDetailsType">
         <item>@string/mock_user_details_config_remote</item>
         <item>@string/mock_user_details_config_custom</item>
