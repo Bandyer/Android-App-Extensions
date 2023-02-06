@@ -121,7 +121,7 @@ class MockUserDetailsSettingsActivity : ScrollAwareToolbarActivity() {
 
     private fun hasChangedSettings(): Boolean =
         currentMockUserDetailsModeMode != getInitialUserDetailsMode() ||
-            imageUrl != (intent.getStringExtra(ImageTextEditActivity.PRESET_URI_PARAM) ?: "") ||
+            imageUrl?.takeIf { it.isNotEmpty() } != (intent.getStringExtra(ImageTextEditActivity.PRESET_URI_PARAM)) ||
             editTextView!!.text.toString() != (intent.getStringExtra(ImageTextEditActivity.PRESET_URI_PARAM) ?: "")
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
