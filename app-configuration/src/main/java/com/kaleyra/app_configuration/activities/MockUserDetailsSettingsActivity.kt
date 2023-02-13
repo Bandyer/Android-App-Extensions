@@ -113,16 +113,15 @@ class MockUserDetailsSettingsActivity : ScrollAwareToolbarActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    private fun getInitialUserDetailsMode(): UserDetailsProviderMode = kotlin.runCatching {
-        UserDetailsProviderMode.valueOf(intent.getStringExtra(MOCK_MODE_PARAM) ?: UserDetailsProviderMode.REMOTE.name)
+    private fun getInitialUserDetailsMode(): UserDetailsProviderMode {
+        return kotlin.runCatching {
+            UserDetailsProviderMode.valueOf(intent.getStringExtra(MOCK_MODE_PARAM) ?: UserDetailsProviderMode.REMOTE.name)
+        }.getOrNull() ?: UserDetailsProviderMode.REMOTE
     }
-        .onFailure {
-            Result.success(UserDetailsProviderMode.REMOTE)
-        }.getOrNull()!!
 
     private fun hasChangedSettings(): Boolean =
         currentMockUserDetailsModeMode != getInitialUserDetailsMode() ||
-            imageUrl != (intent.getStringExtra(ImageTextEditActivity.PRESET_URI_PARAM) ?: "") ||
+            imageUrl?.takeIf { it.isNotEmpty() } != (intent.getStringExtra(ImageTextEditActivity.PRESET_URI_PARAM)) ||
             editTextView!!.text.toString() != (intent.getStringExtra(ImageTextEditActivity.PRESET_URI_PARAM) ?: "")
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
