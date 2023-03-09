@@ -69,7 +69,7 @@ class RestApi(val applicationContext: Context) {
 
     private var restConfiguration: RestConfiguration? = null
 
-    private val scope =
+    val scope =
         CoroutineScope(Dispatchers.IO) + CoroutineName("MockedNetwork") + SupervisorJob()
 
     private val configurationListener =
@@ -106,7 +106,7 @@ class RestApi(val applicationContext: Context) {
         )
     }
 
-    private val client by lazy {
+    val client by lazy {
         HttpClient(OkHttp) {
             engine {
                 preconfigured = okHttpClient
@@ -138,7 +138,7 @@ class RestApi(val applicationContext: Context) {
     private val userId: String
         get() = LoginManager.getLoggedUser(applicationContext)
 
-    private var configurationHeaders: HeadersBuilder.() -> Unit = {
+    var configurationHeaders: HeadersBuilder.() -> Unit = {
         append("apiKey", apiKey)
     }
 
@@ -219,21 +219,6 @@ class RestApi(val applicationContext: Context) {
             withContext(Dispatchers.Main) {
                 if (currentAccessToken.isNullOrBlank()) onError(Exception("Unable to get access token!"))
                 else onSuccess(currentAccessToken!!)
-            }
-        }
-    }
-
-    fun getSampleUsers(userIds: List<String>, onSuccess: (ArrayList<DemoAppUser>) -> Unit, onError: (Throwable) -> Unit) {
-        scope.launch {
-            kotlin.runCatching {
-                val response: HttpResponse = client.get("https://608c623c9f42b20017c3dd9d.mockapi.io/user_details/client/") {
-                    headers(configurationHeaders)
-                    contentType(Application.Json)
-                }
-                val demoAppUsers = ArrayList<DemoAppUser>(response.body<List<DemoAppUser>>().filter { it.user_id in userIds })
-                withContext(Dispatchers.Main) { onSuccess(demoAppUsers) }
-            }.onFailure {
-                withContext(Dispatchers.Main) { onError.invoke(it) }
             }
         }
     }
