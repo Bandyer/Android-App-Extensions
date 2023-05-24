@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Kaleyra @ https://www.kaleyra.com
+ * Copyright 2023 Kaleyra @ https://www.kaleyra.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,46 +14,22 @@
  * limitations under the License.
  */
 
-
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
-    }
+plugins {
+    id "com.android.library"
+    id "kotlin-android"
+    id "kotlin-android-extensions"
+    id "kotlin-kapt"
+    id "kotlinx-serialization"
 }
 
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlinx-serialization'
-
-def okHttpVersion = '4.9.1'
-def leakCanaryVersion = "2.8.1"
-def fastAdapterVersion = "5.4.1"
-def multiDexLibVersion = "2.0.1"
-def crashlyticsLibVersion = "18.2.12"
-def collaborationSuiteUIVersion = "3.0.2"
-def firebaseMessagingLibVersion = '23.0.7'
-def huawei_push_version = '6.9.0.300'
-def phoenixProcessLibVersion = "2.1.2"
-def androidX = '1.2.0'
-def lifecycleVersion = '2.4.1'
-def expansionLayoutVersion = "2.1.6"
-def androidXFragmentVersion = "1.3.2"
-def kotlin_version = "1.6.10"
-
 android {
-    compileSdkVersion releaseAppSdkVersion
-    buildToolsVersion releaseAppBuildToolsVersion
+
+    compileSdkVersion catalog.versions.releaseAppSdkVersion.get().toInteger()
+    buildToolsVersion catalog.versions.releaseAppToolsVersion.get()
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion releaseAppSdkVersion
+        minSdkVersion catalog.versions.minSdkVersion.get().toInteger()
+        targetSdkVersion catalog.versions.releaseAppSdkVersion.get().toInteger()
         versionCode 1
         versionName "1.0"
 
@@ -76,66 +52,62 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
 
-    /*** Testing ***/
-
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation(platform("com.kaleyra:bom:1"))
 
     /*** Platform ***/
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    api 'androidx.core:core-ktx:1.3.2'
-    api "androidx.appcompat:appcompat:$androidX"
-    api "androidx.fragment:fragment-ktx:$androidXFragmentVersion"
-    api "androidx.multidex:multidex:$multiDexLibVersion"
-    api 'com.google.android.material:material:1.3.0'
-
-    /*** Networking ***/
-    api "com.squareup.okhttp3:okhttp:$okHttpVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:"
+    api "androidx.core:core-ktx"
+    api "androidx.appcompat:appcompat"
+    api "androidx.fragment:fragment-ktx"
+    api "androidx.multidex:multidex"
+    implementation "androidx.lifecycle:lifecycle-common-java8"
+    api "com.google.android.material:material"
 
     /*** UI ***/
-    api "androidx.recyclerview:recyclerview:1.2.1"
-    api "com.mikepenz:fastadapter:$fastAdapterVersion"
-    api ("com.robertlevonyan.view:MaterialExpansionPanel:$expansionLayoutVersion") {
+    api "androidx.recyclerview:recyclerview"
+    api "com.mikepenz:fastadapter"
+    api ("com.robertlevonyan.view:MaterialExpansionPanel") {
         exclude module: 'constraintlayout'
     }
+    api "androidx.swiperefreshlayout:swiperefreshlayout"
 
-    api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    /*** Testing ***/
+    testImplementation "junit:junit"
+    androidTestImplementation "androidx.test.ext:junit"
+    androidTestImplementation "androidx.test.espresso:espresso-core"
+
+    /*** Networking ***/
+    api "com.squareup.okhttp3:okhttp"
+    implementation "io.ktor:ktor-client-core"
+    implementation "io.ktor:ktor-client-cio"
+    implementation "io.ktor:ktor-client-content-negotiation"
+    implementation "io.ktor:ktor-serialization-kotlinx-json"
+    implementation "io.ktor:ktor-client-okhttp"
 
     /*** Utility ***/
-    implementation "com.jakewharton:process-phoenix:$phoenixProcessLibVersion"
-
-    debugImplementation 'com.facebook.flipper:flipper:0.137.0'
-    debugImplementation 'com.facebook.soloader:soloader:0.10.3'
-    debugImplementation 'com.facebook.flipper:flipper-leakcanary2-plugin:0.137.0'
-    debugImplementation 'com.bandyer.flipper:flipper-socket-io-plugin:1.1.0'
-    debugImplementation 'com.facebook.flipper:flipper-network-plugin:0.137.0'
-    releaseImplementation 'com.facebook.flipper:flipper-noop:0.137.0'
+    implementation "com.jakewharton:process-phoenix"
+    debugImplementation "com.facebook.flipper:flipper"
+    debugImplementation "com.facebook.soloader:soloader"
+    debugImplementation "com.facebook.flipper:flipper-leakcanary2-plugin"
+    debugImplementation "com.bandyer.flipper:flipper-socket-io-plugin"
+    debugImplementation "com.facebook.flipper:flipper-network-plugin"
+    releaseImplementation "com.facebook.flipper:flipper-noop"
 
     /*** Debug leaks ***/
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakCanaryVersion"
-
-    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
-
-    /*** FCM setup ***/
-    compileOnly "com.google.firebase:firebase-messaging:$firebaseMessagingLibVersion"
-
-    /*** Pushy notification service, useful for China ***/
-    compileOnly 'me.pushy:sdk:1.0.90'
-    compileOnly "com.huawei.hms:push:$huawei_push_version"
+    debugImplementation "com.squareup.leakcanary:leakcanary-android"
 
     /*** Crashlytics ***/
+    compileOnly "com.google.firebase:firebase-crashlytics-ndk"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json"
 
-    compileOnly "com.google.firebase:firebase-crashlytics-ndk:$crashlyticsLibVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1"
-    implementation("io.ktor:ktor-client-core:2.0.3")
-    implementation("io.ktor:ktor-client-cio:2.0.3")
-    implementation "io.ktor:ktor-client-content-negotiation:2.0.3"
-    implementation "io.ktor:ktor-serialization-kotlinx-json:2.0.3"
-    implementation "io.ktor:ktor-client-okhttp:2.0.3"
+    /*** FCM setup ***/
+    compileOnly "com.google.firebase:firebase-messaging"
+
+    /*** Pushy notification service, useful for China ***/
+    compileOnly "me.pushy:sdk"
+    compileOnly "com.huawei.hms:push"
 
     implementation project(':app-configuration')
     implementation project(":app-design")
