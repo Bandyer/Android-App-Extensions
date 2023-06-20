@@ -22,12 +22,12 @@ plugins {
 
 android {
 
-    compileSdkVersion catalog.versions.releaseAppSdkVersion.get().toInteger()
-    buildToolsVersion catalog.versions.releaseAppToolsVersion.get()
+    compileSdkVersion sampleAppCatalog.versions.sampleAppSdkVersion.get().toInteger()
+    buildToolsVersion sampleAppCatalog.versions.sampleAppToolsVersion.get()
 
     defaultConfig {
-        minSdkVersion catalog.versions.minSdkVersion.get().toInteger()
-        targetSdkVersion catalog.versions.releaseAppSdkVersion.get().toInteger()
+        minSdkVersion sampleAppCatalog.versions.sampleAppMinSdkVersion.get().toInteger()
+        targetSdkVersion sampleAppCatalog.versions.sampleAppSdkVersion.get().toInteger()
         versionCode 1
         versionName "1.0"
 
@@ -45,15 +45,13 @@ android {
 }
 
 dependencies {
-    implementation(platform("com.kaleyra:bom:1"))
-
-    implementation "org.jetbrains.kotlin:kotlin-stdlib"
-    implementation "androidx.core:core-ktx"
-    testImplementation "junit:junit"
-    androidTestImplementation "androidx.test.ext:junit"
-    androidTestImplementation "androidx.test.espresso:espresso-core"
-    api "androidx.appcompat:appcompat"
-    api "com.squareup.picasso:picasso"
-    api "androidx.constraintlayout:constraintlayout"
-    api "com.google.android.material:material"
+    implementation sampleAppCatalog.kotlinStdLib
+    implementation sampleAppCatalog.androidxCoreKtx
+    testImplementation sampleAppCatalog.junit
+    androidTestImplementation sampleAppCatalog.junitTestExt
+    androidTestImplementation sampleAppCatalog.androidxTestEspressoCore
+    api sampleAppCatalog.appcompat
+    api sampleAppCatalog.squareupPicasso
+    api sampleAppCatalog.androidxConstraintLayout
+    api sampleAppCatalog.material
 }

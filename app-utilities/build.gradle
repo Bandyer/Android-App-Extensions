@@ -24,12 +24,12 @@ plugins {
 
 android {
 
-    compileSdkVersion catalog.versions.releaseAppSdkVersion.get().toInteger()
-    buildToolsVersion catalog.versions.releaseAppToolsVersion.get()
+    compileSdkVersion sampleAppCatalog.versions.sampleAppSdkVersion.get().toInteger()
+    buildToolsVersion sampleAppCatalog.versions.sampleAppToolsVersion.get()
 
     defaultConfig {
-        minSdkVersion catalog.versions.minSdkVersion.get().toInteger()
-        targetSdkVersion catalog.versions.releaseAppSdkVersion.get().toInteger()
+        minSdkVersion sampleAppCatalog.versions.sampleAppMinSdkVersion.get().toInteger()
+        targetSdkVersion sampleAppCatalog.versions.sampleAppSdkVersion.get().toInteger()
         versionCode 1
         versionName "1.0"
 
@@ -53,61 +53,60 @@ android {
 
 dependencies {
 
-    implementation(platform("com.kaleyra:bom:1"))
-
     /*** Platform ***/
-    implementation "org.jetbrains.kotlin:kotlin-stdlib"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:"
-    api "androidx.core:core-ktx"
-    api "androidx.appcompat:appcompat"
-    api "androidx.fragment:fragment-ktx"
-    api "androidx.multidex:multidex"
-    implementation "androidx.lifecycle:lifecycle-common-java8"
-    api "com.google.android.material:material"
+    implementation sampleAppCatalog.kotlinStdLib
+    implementation sampleAppCatalog.kotlinReflect
+    implementation sampleAppCatalog.androidxLifecycleCommonJava8
+    implementation sampleAppCatalog.kotlinSerializationJson
+    api sampleAppCatalog.androidxCoreKtx
+    api sampleAppCatalog.appcompat
+    api sampleAppCatalog.androidxFragment
+    api sampleAppCatalog.androidxMultidex
+    api sampleAppCatalog.material
 
     /*** UI ***/
-    api "androidx.recyclerview:recyclerview"
-    api "com.mikepenz:fastadapter"
-    api ("com.robertlevonyan.view:MaterialExpansionPanel") {
+    api sampleAppCatalog.androidxRecyclerview
+    api sampleAppCatalog.fastadapter
+    api (sampleAppCatalog.materialExpansionPanel) {
         exclude module: 'constraintlayout'
     }
-    api "androidx.swiperefreshlayout:swiperefreshlayout"
+    api sampleAppCatalog.androidxSwipeRefreshLayout
 
     /*** Testing ***/
-    testImplementation "junit:junit"
-    androidTestImplementation "androidx.test.ext:junit"
-    androidTestImplementation "androidx.test.espresso:espresso-core"
+    testImplementation sampleAppCatalog.junit
+    androidTestImplementation sampleAppCatalog.junitTestExt
+    androidTestImplementation sampleAppCatalog.androidxTestEspressoCore
 
     /*** Networking ***/
-    api "com.squareup.okhttp3:okhttp"
-    implementation "io.ktor:ktor-client-core"
-    implementation "io.ktor:ktor-client-cio"
-    implementation "io.ktor:ktor-client-content-negotiation"
-    implementation "io.ktor:ktor-serialization-kotlinx-json"
-    implementation "io.ktor:ktor-client-okhttp"
+    api sampleAppCatalog.okhttp
+    implementation sampleAppCatalog.ktorClientCore
+    implementation sampleAppCatalog.ktorClientCio
+    implementation sampleAppCatalog.ktorClientContentNegotiation
+    implementation sampleAppCatalog.ktorSerializationKotlinxJson
+    implementation sampleAppCatalog.ktorClientOkhttp
 
     /*** Utility ***/
-    implementation "com.jakewharton:process-phoenix"
-    debugImplementation "com.facebook.flipper:flipper"
-    debugImplementation "com.facebook.soloader:soloader"
-    debugImplementation "com.facebook.flipper:flipper-leakcanary2-plugin"
-    debugImplementation "com.bandyer.flipper:flipper-socket-io-plugin"
-    debugImplementation "com.facebook.flipper:flipper-network-plugin"
-    releaseImplementation "com.facebook.flipper:flipper-noop"
+    implementation sampleAppCatalog.processPhoenix
+    debugImplementation sampleAppCatalog.facebookFlipper
+    debugImplementation sampleAppCatalog.facebookSoloader
+    debugImplementation sampleAppCatalog.facebookFlipperLeakCanaryPlugin
+    debugImplementation sampleAppCatalog.kaleyraFlipperSocketIoPlugin
+    debugImplementation sampleAppCatalog.facebookFlipperNetworkPlugin
+    releaseImplementation sampleAppCatalog.facebookFlipperNoop
 
     /*** Debug leaks ***/
-    debugImplementation "com.squareup.leakcanary:leakcanary-android"
+    debugImplementation sampleAppCatalog.squareupLeakCanary
 
     /*** Crashlytics ***/
-    compileOnly "com.google.firebase:firebase-crashlytics-ndk"
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json"
+    compileOnly sampleAppCatalog.firebaseCrashlyticsNdk
+
 
     /*** FCM setup ***/
-    compileOnly "com.google.firebase:firebase-messaging"
+    compileOnly sampleAppCatalog.firebaseMessaging
 
     /*** Pushy notification service, useful for China ***/
-    compileOnly "me.pushy:sdk"
-    compileOnly "com.huawei.hms:push"
+    compileOnly sampleAppCatalog.pushy
+    compileOnly sampleAppCatalog.huaweiHmsPush
 
     implementation project(':app-configuration')
     implementation project(":app-design")

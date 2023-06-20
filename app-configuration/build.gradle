@@ -23,12 +23,12 @@ plugins {
 
 android {
 
-    compileSdkVersion catalog.versions.releaseAppSdkVersion.get().toInteger()
-    buildToolsVersion catalog.versions.releaseAppToolsVersion.get()
+    compileSdkVersion sampleAppCatalog.versions.sampleAppSdkVersion.get().toInteger()
+    buildToolsVersion sampleAppCatalog.versions.sampleAppToolsVersion.get()
 
     defaultConfig {
-        minSdkVersion catalog.versions.minSdkVersion.get().toInteger()
-        targetSdkVersion catalog.versions.releaseAppSdkVersion.get().toInteger()
+        minSdkVersion sampleAppCatalog.versions.sampleAppMinSdkVersion.get().toInteger()
+        targetSdkVersion sampleAppCatalog.versions.sampleAppSdkVersion.get().toInteger()
         versionCode 1
         versionName "1.0"
 
@@ -61,20 +61,18 @@ android {
 }
 
 dependencies {
-    implementation(platform("com.kaleyra:bom:1"))
-
-    implementation "org.jetbrains.kotlin:kotlin-stdlib"
-    implementation "org.jetbrains.kotlin:kotlin-reflect"
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json"
-    implementation "androidx.activity:activity-ktx"
-    implementation "androidx.appcompat:appcompat"
-    implementation "androidx.core:core-ktx"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx"
-    api "com.google.code.gson:gson"
-    testImplementation "junit:junit"
-    androidTestImplementation "androidx.test.ext:junit"
-    androidTestImplementation "androidx.test.espresso:espresso-core"
-    api "com.otaliastudios:cameraview"
-    implementation "com.google.zxing:core"
+    implementation sampleAppCatalog.kotlinStdLib
+    implementation sampleAppCatalog.kotlinReflect
+    implementation sampleAppCatalog.kotlinSerializationJson
+    implementation sampleAppCatalog.androidxActivity
+    implementation sampleAppCatalog.appcompat
+    implementation sampleAppCatalog.androidxCoreKtx
+    implementation sampleAppCatalog.androidxLifecycleViewModel
+    api sampleAppCatalog.googleGson
+    testImplementation sampleAppCatalog.junit
+    androidTestImplementation sampleAppCatalog.junitTestExt
+    androidTestImplementation sampleAppCatalog.androidxTestEspressoCore
+    api sampleAppCatalog.cameraView
+    implementation sampleAppCatalog.zxing
     implementation project(":app-design")
 }
