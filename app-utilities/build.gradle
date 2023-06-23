@@ -19,7 +19,7 @@ plugins {
     id "kotlin-android"
     id "kotlin-android-extensions"
     id "kotlin-kapt"
-    id "kotlinx-serialization"
+    alias(sampleAppCatalog.plugins.kotlinxSerialization)
 }
 
 android {
