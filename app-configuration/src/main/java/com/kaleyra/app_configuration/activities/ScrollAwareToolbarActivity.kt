@@ -15,10 +15,10 @@
  */
 package com.kaleyra.app_configuration.activities
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import com.kaleyra.app_configuration.R
 import com.kaleyra.app_configuration.databinding.ActionbarLayoutBinding
 
 /**
@@ -29,10 +29,7 @@ abstract class ScrollAwareToolbarActivity(open var withToolbar: Boolean = true) 
 
     private lateinit var binding: ActionbarLayoutBinding
 
-    override fun setContentView(layoutResID: Int) {
-        binding = ActionbarLayoutBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-    }
+    override fun setContentView(layoutResID: Int) = setContentView(LayoutInflater.from(this).inflate(layoutResID, null), null)
 
     override fun setContentView(view: View?) = setContentView(view, null)
     override fun setContentView(view: View?, params: ViewGroup.LayoutParams?) {
@@ -40,7 +37,8 @@ abstract class ScrollAwareToolbarActivity(open var withToolbar: Boolean = true) 
             params?.let { super.setContentView(view, it) } ?: super.setContentView(view)
             return
         }
-        super.setContentView(R.layout.actionbar_layout)
+        binding = ActionbarLayoutBinding.inflate(layoutInflater)
+        super.setContentView(binding.root)
         params?.let {binding.scroll.addView(view, it) } ?: binding.scroll.addView(view!!)
         binding.scroll.isNestedScrollingEnabled = true
         setSupportActionBar(binding.toolbar)
