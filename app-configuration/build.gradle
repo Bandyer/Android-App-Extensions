@@ -22,6 +22,7 @@ plugins {
 
 android {
 
+    namespace "com.kaleyra.app_configuration"
     compileSdkVersion sampleAppCatalog.versions.sampleAppSdkVersion.get().toInteger()
     buildToolsVersion sampleAppCatalog.versions.sampleAppToolsVersion.get()
 
@@ -58,8 +59,19 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     buildFeatures {
         viewBinding true
+        buildConfig true
+    }
+
+    publishing {
+        singleVariant('release') {
+            withJavadocJar()
+        }
     }
 }
 
